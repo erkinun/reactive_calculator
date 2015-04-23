@@ -5,7 +5,7 @@ object TweetLength {
 
   def tweetRemainingCharsCount(tweetText: Signal[String]): Signal[Int] = {
     val text = tweetText()
-    Signal(140 - tweetLength(text))
+    Signal(MaxTweetLength - tweetLength(text))
   }
 
   def colorForRemainingCharsCount(remainingCharsCount: Signal[Int]): Signal[String] = {
