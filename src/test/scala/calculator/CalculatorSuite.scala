@@ -66,4 +66,32 @@ class CalculatorSuite extends FunSuite with ShouldMatchers {
 
     assert(result("hede")().compareTo(15.0) == 0)
   }
+
+  test("computeValues cyclic dependencies") {
+    val result = Calculator.computeValues(Map(
+      "hede" -> Signal(Ref("hodo")),
+      "hodo" -> Signal(Ref("hede"))
+    ))
+
+    assert(result("hede")().compareTo(Double.NaN) == 0)
+  }
+
+  test("computeValues cyclic dependencies with plus") {
+    val result = Calculator.computeValues(Map(
+      "hede" -> Signal(Ref("hodo")),
+      "hodo" -> Signal(Plus(Literal(1), Ref("hede")))
+    ))
+
+    assert(result("hede")().compareTo(Double.NaN) == 0)
+  }
+
+  test("computeValues complex cyclic dependencies with plus") {
+    val result = Calculator.computeValues(Map(
+      "hede" -> Signal(Ref("hodo")),
+      "hodo" -> Signal(Plus(Literal(1), Ref("hadi"))),
+      "hadi" -> Signal(Minus(Ref("hede"), Literal(5)))
+    ))
+
+    assert(result("hede")().compareTo(Double.NaN) == 0)
+  }
 }
