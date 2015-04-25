@@ -15,8 +15,6 @@ object Calculator {
       case (name, signal) => {
         val expr = signal()
 
-        val dVal = eval(expr, namedExpressions)
-
         (name, Signal(eval(expr, namedExpressions)))
       }
     }
