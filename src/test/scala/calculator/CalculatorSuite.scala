@@ -51,4 +51,19 @@ class CalculatorSuite extends FunSuite with ShouldMatchers {
     assert(resultRed2() == "red")
   }
 
+  test("computeValues with a double val") {
+    val expr: Expr = Literal(5)
+    val result = Calculator.computeValues(Map("hede" -> Signal(expr)))
+
+    assert(result("hede")().compareTo(5.0) == 0)
+  }
+
+  test("computeValues sum with a double val") {
+    val expr: Expr = Literal(5)
+    val expr2: Expr = Literal(10)
+    val sum: Expr = Plus(expr, expr2)
+    val result = Calculator.computeValues(Map("hede" -> Signal(sum)))
+
+    assert(result("hede")().compareTo(15.0) == 0)
+  }
 }
