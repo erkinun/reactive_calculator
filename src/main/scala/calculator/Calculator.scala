@@ -13,9 +13,9 @@ object Calculator {
       namedExpressions: Map[String, Signal[Expr]]): Map[String, Signal[Double]] = {
     namedExpressions.map {
       case (name, signal) => {
-        val expr = signal()
+        //val expr = signal()
 
-        (name, Signal(eval(expr, namedExpressions)))
+        (name, Signal(eval(signal(), namedExpressions)))
       }
     }
   }
